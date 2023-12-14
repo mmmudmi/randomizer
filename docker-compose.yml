@@ -14,18 +14,20 @@ services:
       networks:
         - back-office
     
-    # backend:
-    #   image: backend
-    #   restart: on-failure
-    #   build:
-    #     dockerfile: ./backend/Dockerfile
-    #   environment:
-    #     # - DATABASE_URL=mariadb://orders-username:orders-password@database:3306/orders
-    #   depends_on:
-    #     - database
-    #   networks:
-    #     - back-office
-    #     - front-office
+    backend:
+      image: backend
+      restart: on-failure
+      build:
+        dockerfile: ./backend/Dockerfile
+      environment:
+        - DATABASE_URL=mariadb://admin:password@database:3306/randomizer
+      depends_on:
+        - database
+      ports:
+        - 80:80
+      networks:
+        - back-office
+        # - front-office
 
     # frontend:
     #   image: frontend
