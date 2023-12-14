@@ -18,17 +18,11 @@ CREATE TABLE shops (
     name varchar(200) not null,
     description varchar(300) not null,
     tag_id int,
+    is_drawn boolean,
+    time_drawn DateTime,
     foreign key(tag_id) references tags (id)
 );
 
-CREATE TABLE history (
-    id int auto_increment primary key,
-    name varchar(200) not null,
-    description varchar(300) not null,
-    tag_id int,
-    time datetime not null,
-    foreign key(tag_id) references tags (id)
-);
 
 INSERT INTO tags (name) VALUES ('เครื่องดื่ม');
 
