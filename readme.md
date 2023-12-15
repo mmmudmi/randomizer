@@ -1,6 +1,6 @@
 # Randomizer 
 This project implements a randomization feature to select shops at random for Rayong Walking Street
-![Rayong Walking Street Image](images/logo3d.jpg)
+![Rayong Walking Street Image](images/logo3d.png)
 
 
 ## How to run it
