@@ -72,15 +72,15 @@ export default {
 <style scoped>
 .Navbar {
   background-color: #000000;
-  padding: 1.2pc;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+  padding: 1.5pc 2pc 1.5pc 2pc;
+  /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2); */
   z-index: 10;
   height: 5.5pc;
 }
 
 .left-side-Navbar{
-  position: fixed;
-  right: 0;
+  position: absolute;
+  right: 1pc;
 }
 
 
@@ -137,27 +137,28 @@ export default {
   position: absolute;
   margin-top: 1pc;
   background-color: #000000;
-  min-width: 183px;
+  width: 183px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   border: 1.6px solid #ffffff ;
   border-radius: 30px;
   max-height: 10pc; 
   overflow-y: auto;
+  overflow-x: auto;
+
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
   color: rgb(255, 255, 255);
   padding: 12px 16px;
-  text-decoration: none;
   display: block;
   font-size: 0.9pc;
 }
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-  /* font-size: 1.1pc; */
+  font-size: 1pc;
   background-color: #1a1a1a;
   border-radius: 30px;
 }
@@ -167,10 +168,11 @@ export default {
 
 .x-btn{
   position: absolute;
-  right: 0.4pc;
+  right: 0.5pc;
   height: 1.4pc;
   width: 1.4pc;
   border-radius: 50%;
+  z-index: 2;
 }
 .x-btn:hover {
   background-color: white;
