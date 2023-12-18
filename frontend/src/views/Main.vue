@@ -8,6 +8,10 @@
         <div v-else class="show-result" >
           <button class="info-frame" @click="copyToClipboard(this.name)">{{ this.name }}</button>
           <button class="info-frame" @click="copyToClipboard(this.description)">{{ this.description }}</button>
+          <div>
+            <button class="dialog-btn" @click="random()"> จับใหม่ </button>
+            <button class="dialog-btn" style="background-color: #7FB02F;" @click="confirmDrawing()"> ยืนยัน </button>
+          </div>
         </div>
         <DeleteAll />
       </div>
@@ -29,6 +33,7 @@
         showCopySuccess: false,
         name: "",
         description: "",
+        currentShopID: null,
       }
 
     },
@@ -43,6 +48,7 @@
             .then((res) => {
               this.name = res.data.name;
               this.description = res.data.description;
+              this.currentShopID = res.data.id;
               this.isDrawing = false;
             })
 
@@ -79,6 +85,12 @@
         }
 
         document.body.removeChild(textArea);
+      },
+      confirmDrawing(){
+        axios.put("http://localhost:80/api/shops/confirm/draw/"+this.currentShopID)
+          .then((res)=>{
+          })
+        this.isDrawing = true;
       },
     }
 
@@ -118,7 +130,7 @@
   transition:  0.3s ease;
   width: 39pc;
   height: 3.5pc;
-  overflow: auto
+  overflow: scroll
 }
 .info-frame:hover{
   background-color: #ffffff;
@@ -149,4 +161,23 @@
   justify-content: center;
   text-align: center; /* Center text horizontally */
   height: 100%; }
+
+.dialog-btn{
+  border-radius: 40px;
+  /* 7FB02F */
+  background-color: #FF472E;
+  color: #ffffff;
+  padding: 10px 15px 10px 15px;
+  font-size: 16px;
+  font-weight: 800;
+  margin-left: 0.3pc;
+  margin-right: 0.3pc;
+  transition:  0.3s ease;
+  width: 7pc;
+  margin: 0.5pc;
+}
+.dialog-btn:hover{
+  font-size: 17px;
+  width: 8pc;
+}
 </style>
