@@ -3,7 +3,9 @@
     <v-row align="center">
       <div>
         <!-- Logo on the left -->
-        <v-img class="logo" src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/411397878_2581798595320282_3495311650992476261_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=3635dc&_nc_ohc=yvPyeLXO5NsAX8ghSzX&_nc_ht=scontent.fbkk5-3.fna&oh=00_AfCfd4N2_FrAT9iD0DFHQlDsUIkW-XqqusarO01j3n23jQ&oe=6582D3EA"></v-img>
+        <v-img class="logo" src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/411397878_2581798595320282_3495311650992476261_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=3635dc&_nc_ohc=yvPyeLXO5NsAX8ghSzX&_nc_ht=scontent.fbkk5-3.fna&oh=00_AfCfd4N2_FrAT9iD0DFHQlDsUIkW-XqqusarO01j3n23jQ&oe=6582D3EA"
+        @click="navigateTo('main')"
+        ></v-img>
       </div>
 
       <div class="left-side-Navbar">
@@ -16,15 +18,20 @@
 
               <a v-for="(link, index) in dropDownContents" :key="index" @click="handleDropDownClick(link.id,link.name)">
                 {{ link.name }}
-                <button class="x-btn">x</button>
+                <!-- <button class="x-btn">x</button> -->
               </a>
-              <a>+ เพิ่มหมวด</a>
             </div>
           </div>
           
-          <button class="Navbar-btn">+ เพิ่ม</button>
-          <button class="Navbar-btn">รายชื่อที่เหลือ</button>
-          <button class="Navbar-btn">ประวัติ</button>
+          <button class="Navbar-btn" 
+          :class="{'Navbar-btn Hightlighted': $route.name === 'add'}"
+          @click="navigateTo('add')">+ เพิ่ม</button>
+          <button class="Navbar-btn" 
+          :class="{'Navbar-btn Hightlighted': $route.name === 'remaining'}"
+          @click="navigateTo('remaining')">รายชื่อที่เหลือ</button>
+          <button class="Navbar-btn" 
+          :class="{'Navbar-btn Hightlighted': $route.name === 'history'}"
+          @click="navigateTo('history')">ประวัติ</button>
 
       </div>
     </v-row>
@@ -32,18 +39,17 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Navbar',
   data() {
     return {
-      dropDownText: "เลือกหมวด",
-      dropDownID: 0 ,// if so alert เลือกหมวกก่อน
-      dropDownContents: {
-        0: {'id':1 , 'name':'อาหาร'},
-        1: {'id':2 , 'name':'น้ำ'},
-        2: {'id':3 , 'name':'กิ๊ฟช็อป'}
-      },
+      dropDownText: localStorage.getItem('dropDownText') || "เลือกหมวด",
+      dropDownContents: {},
     };
+  },
+  beforeMount() {
   },
   methods: {
     dropDown() {
@@ -63,9 +69,23 @@ export default {
     },
     handleDropDownClick(id,name) {
       this.dropDownText = name;
-      this.dropDownID = id;
-    }
+      localStorage.setItem('dropDownID', id)
+      localStorage.setItem('dropDownText', name)
+    },
+    getAllTypes(){
+      axios.get('http://localhost:80/api/tags')
+            .then((res) => {
+              this.dropDownContents = res.data;
+              console.log(this.dropDownContents);
+            })
+    },
+    navigateTo(where){
+      this.$router.push(where);
+    },
   },
+  beforeMount() {
+    this.getAllTypes();
+  }
 };
 </script>
 
@@ -86,6 +106,11 @@ export default {
 
 .logo {
   width: 6pc;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.logo:hover{
+  width: 6.2pc;
 }
 
 .Navbar-btn {
@@ -100,9 +125,13 @@ export default {
   border: 1.6px solid #ffffff ;
   transition: padding 0.3s ease;
 }
+.Hightlighted {
+  background-color: #ffffff;
+  color: #000000;
+}
 .Navbar-btn:hover {
-  background-color: #1a1a1a;
-  padding: 14px 19px 14px 19px;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 /* Dropdown Button */
@@ -122,8 +151,8 @@ export default {
 
 /* Dropdown button on hover & focus */
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #1a1a1a;
-}
+  background-color: #ffffff;
+  color: #000000;}
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
