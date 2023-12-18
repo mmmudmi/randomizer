@@ -1,11 +1,25 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List, Dict
 
 
-class Shop(BaseModel):
-    id: int | None = None
+class ShopItem(BaseModel):
     name: str
     description: str
+
+
+class Shop(ShopItem):
+    id: int | None = None
+    # name: str
+    # description: str
+    tag_id: int
+
+    class Config:
+        orm_mode = True
+
+class CreateShops(BaseModel):
+    id: int | None = None
+    shops: List[ShopItem]
     tag_id: int
 
     class Config:

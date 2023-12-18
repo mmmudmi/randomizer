@@ -32,9 +32,12 @@ def get_db():
         db.close()
 
 #----- SHOPS --------
-@app.post("/api/shops/", response_model=schemas.Shop)
-def create_shop(shop: schemas.Shop, db: Session = Depends(get_db)):
-    return crud.create_shop(db, shop)
+@app.post("/api/shops/")
+def create_shop(data: schemas.CreateShops, db: Session = Depends(get_db)):
+    crud.create_shop(db,data)
+    return {
+        "message": "เพิ่มร้านค้าสำเร็จ!",
+    }
 
 @app.get("/api/shops/}", response_model=List[schemas.Shop])
 def read_shops(db: Session = Depends(get_db)):
@@ -98,13 +101,17 @@ def redraw_all(tag_id: int, db: Session = Depends(get_db)):
         "message": "เรียกจับใหม่ทั้งหมดสำเร็จ!"
     }
 
+@app.get("/api/history/tag/{tag_id}", response_model=List[schemas.ShopDetails])
+def history_by_tag(tag_id: int, db: Session = Depends(get_db)):
+    return crud.history_by_tag(db, tag_id)
+
 #----- TAGS --------
 @app.post("/api/tags/", response_model=schemas.Tag)
 def create_tag(tag: schemas.Tag, db: Session = Depends(get_db)):
     return crud.create_tag(db, tag)
 
-@app.get("/api/tags/", response_model=List[schemas.Shop])
-def delete_tags(db: Session = Depends(get_db)):
+@app.get("/api/tags/", response_model=List[schemas.Tag])
+def get_tags(db: Session = Depends(get_db)):
     return crud.get_all(db,models.Tag)
 
 @app.delete("/api/tags/{tag_id}")
@@ -113,3 +120,4 @@ def delete_tag(tag_id: int, db: Session = Depends(get_db)):
     return {
         "message": "ลบสำเร็จ!"
     }
+

@@ -24,16 +24,16 @@ def delete_by_name(db: Session, model: models.Base, name: str):
     db.query(model).filter(model.name == name).delete()
     db.commit()
 
-def create_shop(db: Session, shop: schemas.Shop):
-    db_shop = models.Shop(
-        name = shop.name,
-        description = shop.description,
-        tag = get_by_id(db,models.Tag,shop.tag_id)
-    )
-    db.add(db_shop)
-    db.commit()
-    db.refresh(db_shop)
-    return db_shop
+def create_shop(db: Session, data: schemas.CreateShops):
+    for shop in data.shops:
+        db_shop = models.Shop(
+            name = shop.name,
+            description = shop.description,
+            tag = get_by_id(db,models.Tag,data.tag_id)
+        )
+        db.add(db_shop)
+        db.commit()
+        # db.refresh(db_shop)
 
 def confirm_draw(db: Session, shop_id: int):
     db_shop = db.query(models.Shop).filter(models.Shop.id == shop_id).first()
@@ -81,3 +81,6 @@ def delete_all_by_tag_id_undrawn(db: Session, tag_id: int):
 def draw(db:Session, tag_id: int):
     shops = get_all_available_by_tag_id(db, tag_id)
     return random.choice(shops)
+
+def history_by_tag(db:Session, tag_id: int):
+    return db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == True)).all()
