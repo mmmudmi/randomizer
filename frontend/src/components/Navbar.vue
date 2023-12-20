@@ -170,7 +170,7 @@ export default {
   background-color: #000000;
   color: #ffffff;
   padding: 12px 17px 12px 17px;
-  width: 11pc;
+  width: 9pc;
   font-size: 14px;
   font-weight: 700;
   margin-left: 0.3pc;
@@ -196,7 +196,7 @@ export default {
   position: absolute;
   margin-top: 1pc;
   background-color: #000000;
-  width: 183px;
+  width: 9.1pc;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   border: 1.6px solid #ffffff ;
