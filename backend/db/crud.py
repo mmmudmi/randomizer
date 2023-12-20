@@ -6,23 +6,11 @@ import random
 def get_all(db: Session, model: models.Base):
     return db.query(model).all()
 
-def delete_all(db: Session, model: models.Base):
-    db.query(model).delete()
-    db.commit()
-
 def get_by_id(db: Session, model: models.Base, id: int):
     return db.query(model).filter(model.id == id).first()
 
 def get_by_name(db: Session, model: models.Base, name: str):
     return db.query(model).filter(model.name == name).first()
-
-def delete_by_id(db: Session, model: models.Base, id: int):
-    db.query(model).filter(model.id == id).delete()
-    db.commit()
-
-def delete_by_name(db: Session, model: models.Base, name: str):
-    db.query(model).filter(model.name == name).delete()
-    db.commit()
 
 def create_shop(db: Session, data: schemas.CreateShops):
     for shop in data.shops:
@@ -39,7 +27,7 @@ def confirm_draw(db: Session, shop_id: int):
     db_shop = db.query(models.Shop).filter(models.Shop.id == shop_id).first()
     db.query(models.Shop).filter(models.Shop.id == shop_id).update({
         "is_drawn": True,
-        "time_drawn": func.now(),
+        "time_drawn": func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok')
     })
     db.commit()
     db.refresh(db_shop)
@@ -70,17 +58,70 @@ def create_tag(db: Session, tag: schemas.Tag):
 def get_all_available_by_tag_id(db: Session, tag_id: int):
     return db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == False)).all()
 
-def delete_all_by_tag_id_drawn(db: Session,tag_id: int):
-    db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == True)).delete()
-    db.commit()
-
-def delete_all_by_tag_id_undrawn(db: Session, tag_id: int):
-    db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == False)).delete()
-    db.commit()
-
 def draw(db:Session, tag_id: int):
     shops = get_all_available_by_tag_id(db, tag_id)
     return random.choice(shops)
 
 def history_by_tag(db:Session, tag_id: int):
     return db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == True)).all()
+
+# delete
+
+def shop_to_deleted(db: Session, shop_id: int):
+    shop_to_move = db.query(models.Shop).filter(models.Shop.id == shop_id).first()
+    if shop_to_move:
+        deleted_shop = models.Deleted(
+            name=shop_to_move.name,
+            description=shop_to_move.description,
+            tag_id=shop_to_move.tag_id,
+            is_drawn=shop_to_move.is_drawn,
+            time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok')
+        )
+
+        db.add(deleted_shop)
+        db.delete(shop_to_move)
+        db.commit()
+        db.refresh(deleted_shop)
+
+def deleted_to_shop(db: Session, shop_id: int):
+    shop_to_move = db.query(models.Deleted).filter(models.Deleted.id == shop_id).first()
+    if shop_to_move:
+        shop = models.Shop(
+            name=shop_to_move.name,
+            description=shop_to_move.description,
+            tag_id=shop_to_move.tag_id,
+            is_drawn=shop_to_move.is_drawn,
+            time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok')
+        )
+        db.add(shop)
+        db.delete(shop_to_move)
+        db.commit()
+        db.refresh(shop)
+
+def delete_all(db: Session, model: models.Base):
+    db.query(model).delete()
+    db.commit()
+
+def delete_by_id(db: Session, model: models.Base, id: int):
+    db.query(model).filter(model.id == id).delete()
+    db.commit()
+
+def delete_by_shopId(db: Session, id: int):
+    shop_to_deleted(db,id)
+
+def delete_all_by_tag_id_drawn(db: Session,tag_id: int):
+    shops = db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == True))
+    for shop in shops:
+        shop_to_deleted(db,shop.id)
+
+def delete_all_by_tag_id_undrawn(db: Session, tag_id: int):
+    shops = db.query(models.Shop).filter((models.Shop.tag_id == tag_id) & (models.Shop.is_drawn == False))
+    for shop in shops:
+        shop_to_deleted(db,shop.id)
+
+def empty_deleted_byTag(db: Session,tag_id: int):
+    db.query(models.Deleted).filter(models.Deleted.tag_id==tag_id).delete()
+    db.commit()
+
+def get_all_deleted_byTag(db: Session, tag_id: int):
+    return db.query(models.Deleted).filter(models.Deleted.tag_id == tag_id).all()

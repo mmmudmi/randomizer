@@ -53,14 +53,15 @@ def read_shop(shop_id: int, db: Session = Depends(get_db)):
 
 @app.delete("/api/shops/{shop_id}")
 def delete_shop(shop_id: int, db: Session = Depends(get_db)):
-    crud.delete_by_id(db, models.Shop, shop_id)
+    crud.delete_by_shopId(db, shop_id)
     return {
         "message": "ลบสำเร็จ!"
     }
 
-@app.delete("/api/shops/")
-def delete_shops( db: Session = Depends(get_db)):
+@app.delete("/api/reset/")
+def delete_all( db: Session = Depends(get_db)):
     crud.delete_all(db, models.Shop)
+    crud.delete_all(db, models.Deleted)
     return {
         "message": "ลบร้านค้าทั้งหมดสำเร็จ!"
     }
@@ -121,3 +122,15 @@ def delete_tag(tag_id: int, db: Session = Depends(get_db)):
         "message": "ลบสำเร็จ!"
     }
 
+#----- DELETED --------
+@app.delete("/api/deleted/tag/{tag_id}")
+def empty_deleted(tag_id: int,db: Session = Depends(get_db)):
+    crud.empty_deleted_byTag(db,tag_id)
+
+@app.get("/api/deleted/tag/{tag_id}",response_model=List[schemas.ShopDetails])
+def all_deleted_shops(tag_id: int,db: Session = Depends(get_db)):
+    return crud.get_all_deleted_byTag(db,tag_id)
+
+@app.put("/api/deleted/redraw/{shop_id}")
+def redraw_deleted_shops(shop_id: int,db: Session = Depends(get_db)):
+    return crud.deleted_to_shop(db,shop_id)
