@@ -3,14 +3,14 @@
       <v-dialog v-model="dialog" persistent >
         <template v-slot:activator="{ props }">
           <button v-bind="props" class="delete-all-btn">
-            reset
+            ลบรายชื่อทั้งหมวดนี้
           </button>
         </template>
         <v-card class="dialog" style=" border-radius: 1.6pc;">
           <v-card-title style="text-align: center;font-weight: 800;padding-top: 1.3pc;font-size: 25px;">
             ลบทั้งหมด
           </v-card-title>
-          <p style="font-size: 15px;text-align: center;">ลบข้อมูลร้านค้าทุกหมวดหมู่รวมถึงลบประวัติ ไม่สามารถกู้คืนได้อีก</p>
+          <p style="font-size: 15px;text-align: center;">ลบแล้วไม่สามารถกู้คืนได้แล้วนะ!</p>
 
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -32,12 +32,10 @@
       methods: {
         deleteAll() {
             this.dialog = false,
-            axios.delete("http://localhost:80/api/reset/")
-              .then((res)=> {
-                this.fetchData()
+            axios.delete("http://localhost:80/api/deleted/tag/"+localStorage.getItem('dropDownID'))
+              .then ((res) => {
+                window.location.reload(true);
               })
-            localStorage.setItem('recentDrawn','-')
-            // window.location.reload(true);
         },
       }
     }
@@ -67,7 +65,7 @@
 }
 .dialog{
     width: 100%;
-    max-width: 30pc;
+    max-width: 23pc;
     background-color: #ffffff;
     align-items: center;
     align-self: center;

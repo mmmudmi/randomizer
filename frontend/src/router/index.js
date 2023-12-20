@@ -11,6 +11,26 @@ const routes = [
         alias: '',
         name: 'main',
         component: () => import('@/views/Main.vue'),
+      },
+      {
+        path: '/add',
+        name: 'add',
+        component: () => import('@/views/Add.vue'),
+      },
+      {
+        path: '/remaining',
+        name: 'remaining',
+        component: () => import('@/views/Remaining.vue'),
+      },
+      {
+        path: '/history',
+        name: 'history',
+        component: () => import('@/views/History.vue'),
+      },
+      {
+        path: '/deleted',
+        name: 'deleted',
+        component: () => import('@/views/Deleted.vue'),
       }
     ],
   },
