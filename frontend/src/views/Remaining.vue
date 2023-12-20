@@ -9,8 +9,8 @@
           <thead>
             <tr>
               <th style="text-align: center;width: 40%;">ชื่อ</th>
-              <th style="text-align: center;width: 55%;">รายละเอียด</th>
-              <th style="text-align: center;"></th>
+              <th style="text-align: center">รายละเอียด</th>
+              <th style="text-align: center;width: 1%;"></th>
               <!-- Add more headers as needed -->
             </tr>
           </thead>
@@ -18,7 +18,7 @@
             <tr v-for="(info, index) in shopInfo" :key="index">
               <td>{{ info.name }}</td>
               <td>{{ info.description }}</td>
-              <td><p class="delete" @click="deleteShop(info.id)">-</p></td>
+              <td class="delete" @click="deleteShop(info.id)">x</td>
             </tr>
           </tbody>
         </table>
@@ -61,8 +61,10 @@
           )
       },
       deleteShop(shopID){
-        console.log("delete shop with ID: "+shopID)
-        this.fetchData();
+        axios.delete("http://localhost:80/api/shops/"+shopID)
+          .then((res)=>
+            this.fetchData()
+          )
       },
     },
     beforeMount() {
@@ -86,7 +88,7 @@
   cursor: pointer;
 }
 .delete:hover{
-  color: #FF472E;
+  background-color: #FF472E;
 }
 
 .content {
@@ -103,21 +105,9 @@
   justify-content: center;
 }
 
-.info-frame{
-  border-radius: 40px;
-  color: #ffffff;
-  border: 1.6px solid #ffffff ;
-  padding: 11px 10px 11px 10px;
-  font-size: 17px;
-  margin-left: 0.3pc;
-  margin-right: 0.3pc;
-  transition:  0.3s ease;
-  width: 39pc;
-  height: 3.5pc;
-  overflow: auto;
-}
+
 .table-container{
-  width: 75vw;
+  width: 90vw;
   height: 63vh;
   overflow: scroll;
 }
@@ -143,10 +133,6 @@
   .shop-info-table td {
     color: white;
     overflow: auto;
-  }
-
-  .shop-info-table td:hover {
-    background-color: #101010;
   }
 
 </style>
