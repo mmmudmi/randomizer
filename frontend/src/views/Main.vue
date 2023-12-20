@@ -2,12 +2,24 @@
   <div class="page">
     <Navbar v-model="dropDownID" />
     <div class="content">
+
       <div class="info">
         <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopyError" text="ไม่มีร้านค้าให้จับฉลาก" type="error" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
         <button v-if="isDrawing" class="yellow-btn" @click="random()">สุ่มร้านค้า</button>
         <div v-else class="show-result" >
-          <button class="info-frame" @click="copyToClipboard(this.name)">{{ this.name }}</button>
-          <button class="info-frame" @click="copyToClipboard(this.description)">{{ this.description }}</button>
+          <div>
+            <button class="info-frame" @click="copyToClipboard(this.name)">{{ this.name }}</button>
+            <button v-if="this.name!=null" @click="readText(this.name)">
+              <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
+            </button>
+          </div>
+          <div>
+            <button class="info-frame" @click="copyToClipboard(this.description)">{{ this.description }}</button>
+            <button v-if="this.name!=null" @click="readText(this.description)">
+              <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
+            </button>
+          </div>
           <div>
             <button class="dialog-btn" @click="random()"> จับใหม่ </button>
             <button class="dialog-btn" style="background-color: #7FB02F;" @click="confirmDrawing()"> ยืนยัน </button>
@@ -16,6 +28,7 @@
         <DeleteAll />
       </div>
     </div>
+    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;font-size: 13px;cursor: pointer;" @click="copyToClipboard(this.prevDrawn)">จับล่าสุด: {{ this.prevDrawn }}</p>
   </div>
 </template>
 
@@ -31,9 +44,11 @@
         dropDownID: null,
         isDrawing: true,
         showCopySuccess: false,
-        name: "",
-        description: "",
+        showCopyError: false,
+        name: null,
+        description: null,
         currentShopID: null,
+        prevDrawn: localStorage.getItem('recentDrawn'),
       }
 
     },
@@ -50,6 +65,12 @@
               this.description = res.data.description;
               this.currentShopID = res.data.id;
               this.isDrawing = false;
+            })
+            .catch((error) => {
+              this.showCopyError = true;
+                setTimeout(() => {
+                  this.showCopyError = false;
+                }, 1000);
             })
 
         }
@@ -79,7 +100,7 @@
           this.showCopySuccess = true;
           setTimeout(() => {
             this.showCopySuccess = false;
-          }, 600);
+          }, 700);
         } catch (err) {
           console.error('Unable to copy to clipboard', err);
         }
@@ -91,6 +112,15 @@
           .then((res)=>{
           })
         this.isDrawing = true;
+        this.prevDrawn = this.name;
+        localStorage.setItem('recentDrawn',this.prevDrawn)
+      },
+      readText(textToRead) {      
+        const synth = window.speechSynthesis;
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'th-TH';
+        utterance.rate = 1.4;
+        synth.speak(utterance);
       },
     }
 
@@ -179,5 +209,8 @@
 .dialog-btn:hover{
   font-size: 17px;
   width: 8pc;
+}
+.gg-play-button-o:hover{
+  border: #FF472E;border: 2px solid;
 }
 </style>
