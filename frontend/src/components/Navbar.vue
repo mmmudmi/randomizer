@@ -15,10 +15,8 @@
               <i class="fa fa-caret-down" style="position: absolute; right: 1.5pc;top: 1pc"></i>
             </button>
             <div id="myDropdown" class="dropdown-content">
-
               <a v-for="(link, index) in dropDownContents" :key="index" @click="handleDropDownClick(link.id,link.name)">
                 {{ link.name }}
-                <!-- <button class="x-btn">x</button> -->
               </a>
             </div>
           </div>
@@ -29,9 +27,21 @@
           <button class="Navbar-btn" 
           :class="{'Navbar-btn Hightlighted': $route.name === 'remaining'}"
           @click="navigateTo('remaining')">รายชื่อที่เหลือ</button>
-          <button class="Navbar-btn" 
-          :class="{'Navbar-btn Hightlighted': $route.name === 'history'}"
-          @click="navigateTo('history')">ประวัติ</button>
+          <!-- <button class="Navbar-btn" 
+          :class="{'Navbar-btn Hightlighted': $route.name === 'history' }"
+          @click="navigateTo('history')">ประวัติ</button> -->
+
+          <div class="dropdown">
+            <button @click="historyDropDown()" class="dropbtn" style="width: 7pc;">
+              ประวัติ
+              <i class="fa fa-caret-down" style="position: absolute; right: 1.5pc;top: 1pc"></i>
+            </button>
+            <div id="myHistoryDropdown" class="dropdown-content" style="width: 7.3pc;">
+              <a v-for="(link, index) in historyContents" :key="index" @click="navigateTo(link.path)">
+                {{ link.name }}
+              </a>
+            </div>
+          </div>
 
       </div>
     </v-row>
@@ -47,6 +57,10 @@ export default {
     return {
       dropDownText: localStorage.getItem('dropDownText') || "เลือกหมวด",
       dropDownContents: {},
+      historyContents: [
+        {'name': 'จับฉลากแล้ว','path':'history'},
+        {'name': 'ลบล่าสุด','path':'deleted'}
+      ]
     };
   },
   beforeMount() {
@@ -67,16 +81,31 @@ export default {
         }
       }
     },
+    historyDropDown() {
+      document.getElementById("myHistoryDropdown").classList.toggle("show");
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          var i;
+          for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+    },
     handleDropDownClick(id,name) {
       this.dropDownText = name;
       localStorage.setItem('dropDownID', id)
       localStorage.setItem('dropDownText', name)
+      window.location.reload(true);
     },
     getAllTypes(){
       axios.get('http://localhost:80/api/tags')
             .then((res) => {
               this.dropDownContents = res.data;
-              console.log(this.dropDownContents);
             })
     },
     navigateTo(where){
@@ -85,6 +114,7 @@ export default {
   },
   beforeMount() {
     this.getAllTypes();
+    localStorage.setItem('recentDrawn','-')
   }
 };
 </script>
@@ -174,7 +204,6 @@ export default {
   max-height: 10pc; 
   overflow-y: auto;
   overflow-x: auto;
-
 }
 
 /* Links inside the dropdown */
@@ -183,6 +212,7 @@ export default {
   padding: 12px 16px;
   display: block;
   font-size: 0.9pc;
+  cursor: pointer;
 }
 
 /* Change color of dropdown links on hover */

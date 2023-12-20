@@ -3,28 +3,29 @@
     <Navbar v-model="dropDownID" />
     <div class="content">
       <div class="info">
+        <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
         <p style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">ร้านค้าที่ถูกจับฉลากแล้ว หมวด{{ this.dropDownText }}</p>
         <div class="table-container">
-          <table class="shop-info-table">
+          <table v-if="length!=0"  class="shop-info-table">
           <thead>
             <tr>
               <th style="text-align: center;width: 10%;">เวลา</th>
-              <th style="text-align: center;width: 45%;">ชื่อ</th>
+              <th style="text-align: center;width: 30%;">ชื่อ</th>
               <th style="text-align: center;">รายละเอียด</th>
-              <!-- <th style="text-align: center;"></th> -->
+              <th style="text-align: center;width: 1%;"></th>
               <!-- Add more headers as needed -->
             </tr>
           </thead>
           <tbody>
             <tr v-for="(info, index) in shopInfo" :key="index">
-              <td>{{ info.time_drawn }}</td>
-              <td>{{ info.name }}</td>
-              <td>{{ info.description }}</td>
-              <p class="delete" @click="deleteShop(info.id)">เรียกจับใหม่</p>
-              <!-- Add more cells as needed -->
+              <td style="font-size: 12px;">{{ info.time_drawn }}</td>
+              <td @click="this.copyToClipboard(info.name)">{{ info.name }}</td>
+              <td @click="this.copyToClipboard(info.description)">{{ info.description }}</td>
+              <td class="redraw" @click="this.redraw(info.id)">  <i class="gg-undo"></i></td>
             </tr>
           </tbody>
         </table>
+        <p v-else style="color: white;text-align: center;font-size: 2pc;">-</p>
         </div>
         <RedrawAll />
       </div>
@@ -47,6 +48,7 @@
         dropDownID: null,
         shopInfo: {},
         length: 0,
+        showCopySuccess: false,
       }
 
     },
@@ -67,6 +69,44 @@
         console.log("delete shop with ID: "+shopID)
         this.fetchData();
       },
+      redraw(shopID){
+        axios.put("http://localhost:80/api/shops/redraw/"+shopID)
+          .then((res)=> {
+            this.fetchData()
+          })
+      },
+      copyToClipboard(text){
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        // Make the textarea out of viewport
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = '0';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          const successful = document.execCommand('copy');
+          const message = successful ? 'Copied to clipboard!' : 'Failed to copy to clipboard';
+          this.showCopySuccess = true;
+          setTimeout(() => {
+            this.showCopySuccess = false;
+          }, 700);
+        } catch (err) {
+          console.error('Unable to copy to clipboard', err);
+        }
+
+        document.body.removeChild(textArea);
+      }
     },
     beforeMount() {
       this.fetchData();
@@ -77,22 +117,11 @@
 
 <style scoped>
 .page {
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   width: 100%;
   height: 100vh;  
   display: flex;
   flex-direction: column;
-}
-.delete{
-  color: white;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  right: 0pc;
-  top: 9px
-}
-.delete:hover{
-  color: #FF472E;
 }
 
 .content {
@@ -109,38 +138,8 @@
   justify-content: center;
 }
 
-.info-frame{
-  border-radius: 40px;
-  color: #ffffff;
-  border: 1.6px solid #ffffff ;
-  padding: 11px 10px 11px 10px;
-  font-size: 17px;
-  margin-left: 0.3pc;
-  margin-right: 0.3pc;
-  transition:  0.3s ease;
-  width: 39pc;
-  height: 3.5pc;
-  overflow: auto;
-}
-.yellow-btn{
-  border-radius: 40px;
-  background-color: #FF922E;
-  color: #ffffff;
-  padding: 12px 17px 12px 17px;
-  font-size: 30px;
-  font-weight: 800;
-  margin-left: 0.3pc;
-  margin-right: 0.3pc;
-  transition:  0.3s ease;
-  width: 15pc;
-}
-.yellow-btn:hover{
-  background-color: #ff7b00;
-  font-size: 32px;
-  width: 16pc;
-}
 .table-container{
-  width: 75vw;
+  width: 90vw;
   height: 63vh;
   overflow: scroll;
 }
@@ -153,6 +152,7 @@
     border: 1.1px solid #ffffff;
     text-align: left;
     padding: 8px;
+    font-size: 14px;
   }
 
   .shop-info-table th {
@@ -168,8 +168,15 @@
     overflow: auto;
   }
 
-  .shop-info-table td:hover {
-    background-color: #101010;
-  }
-
+.shop-info-table td:hover {
+  cursor: pointer;
+  font-size: 15px;
+}
+.redraw{
+  color: white;
+  cursor: pointer;
+}
+.redraw:hover{
+  background-color: #ffaf38;
+}
 </style>
