@@ -8,17 +8,37 @@
         <v-alert v-if="showCopyError" text="ไม่มีร้านค้าให้จับฉลาก" type="error" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
         <button v-if="isDrawing" class="yellow-btn" @click="random()">สุ่มร้านค้า</button>
         <div v-else class="show-result" >
-          <div>
-            <button class="info-frame" @click="copyToClipboard(this.name)">{{ this.name }}</button>
-            <button v-if="this.name!=null" @click="readText(this.name)">
-              <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
-            </button>
+          <div v-if="this.shop_count==1">
+            <div>
+              <button class="info-frame" style="height: 3.5pc;" @click="copyToClipboard(this.name)">{{ this.name }}</button>
+              <button v-if="this.name!=null" @click="readText(this.name)">
+                <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
+              </button>
+            </div>
+            <div>
+              <button class="info-frame" style="height: 3.5pc;" @click="copyToClipboard(this.description)">{{ this.description }}</button>
+              <button v-if="this.name!=null" @click="readText(this.description)">
+                <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
+              </button>
+            </div>
           </div>
-          <div>
-            <button class="info-frame" @click="copyToClipboard(this.description)">{{ this.description }}</button>
-            <button v-if="this.name!=null" @click="readText(this.description)">
-              <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
-            </button>
+          <div v-else>
+            <div>
+              <button class="info-frame" @click="copyToClipboard(this.each_shop[0])">
+                <p class="single-line" v-for="(line, i) in this.each_shop" :key="i">{{ i+1 }}. {{ line }}</p>
+              </button>
+              <button v-if="this.name!=null" @click="readText(this.name)">
+                <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
+              </button>
+            </div>
+            <div>
+              <button class="info-frame" @click="copyToClipboard(this.each_description[0])">
+                <p class="single-line" v-for="(line, i) in this.each_description" :key="i">{{ i+1 }}. {{ line }}</p>
+              </button>
+              <button v-if="this.name!=null" @click="readText(this.description)">
+                <i class="gg-play-button-o" style="cursor: pointer;color: white; position: relative; top: 0.3pc;"></i>
+              </button>
+            </div>
           </div>
           <div>
             <button class="dialog-btn" @click="random()"> จับใหม่ </button>
@@ -46,9 +66,12 @@
         showCopySuccess: false,
         showCopyError: false,
         name: null,
+        shop_count: 1,
         description: null,
         currentShopID: null,
         prevDrawn: localStorage.getItem('recentDrawn'),
+        each_shop: [],
+        each_description: [],
       }
 
     },
@@ -65,6 +88,8 @@
               this.description = res.data.description;
               this.currentShopID = res.data.id;
               this.isDrawing = false;
+              this.shop_count = res.data.shop_count;
+              this.seperate_line();
             })
             .catch((error) => {
               this.showCopyError = true;
@@ -122,6 +147,10 @@
         utterance.rate = 1.4;
         synth.speak(utterance);
       },
+      seperate_line(){
+        this.each_shop = this.name.split('\n')
+        this.each_description = this.description.split('\n')
+      },
     }
 
   }
@@ -159,7 +188,7 @@
   margin: 0.5pc;
   transition:  0.3s ease;
   width: 39pc;
-  height: 3.5pc;
+  /* height: 3.5pc; */
   overflow: scroll
 }
 .info-frame:hover{

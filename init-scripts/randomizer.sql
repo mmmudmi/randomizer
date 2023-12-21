@@ -20,6 +20,7 @@ CREATE TABLE shops (
     tag_id int,
     is_drawn boolean,
     time_drawn DateTime,
+    shop_count int,
     foreign key(tag_id) references tags (id)
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE deleted (
     tag_id int,
     is_drawn boolean,
     time_drawn DateTime,
+    shop_count int,
     foreign key(tag_id) references tags (id)
 );
 

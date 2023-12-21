@@ -23,6 +23,24 @@ def create_shop(db: Session, data: schemas.CreateShops):
         db.commit()
         # db.refresh(db_shop)
 
+def create_shop_group(db: Session, data: schemas.CreateShops):
+    names = ""
+    descriptions = ""
+    for index, shop in enumerate(data.shops):
+        names += shop.name
+        descriptions += shop.description
+        if index < len(data.shops) - 1:
+            names += "\n"
+            descriptions += "\n"
+    db_shop = models.Shop (
+        name = names,
+        description = descriptions,
+        tag = get_by_id(db,models.Tag,data.tag_id),
+        shop_count = len(data.shops),
+    )
+    db.add(db_shop)
+    db.commit()
+
 def confirm_draw(db: Session, shop_id: int):
     db_shop = db.query(models.Shop).filter(models.Shop.id == shop_id).first()
     db.query(models.Shop).filter(models.Shop.id == shop_id).update({
@@ -75,7 +93,8 @@ def shop_to_deleted(db: Session, shop_id: int):
             description=shop_to_move.description,
             tag_id=shop_to_move.tag_id,
             is_drawn=shop_to_move.is_drawn,
-            time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok')
+            time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok'),
+            shop_count= shop_to_move.shop_count,
         )
 
         db.add(deleted_shop)
@@ -91,7 +110,8 @@ def deleted_to_shop(db: Session, shop_id: int):
             description=shop_to_move.description,
             tag_id=shop_to_move.tag_id,
             is_drawn=shop_to_move.is_drawn,
-            time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok')
+            time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok'),
+            shop_count= shop_to_move.shop_count,
         )
         db.add(shop)
         db.delete(shop_to_move)

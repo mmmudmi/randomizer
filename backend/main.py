@@ -39,6 +39,10 @@ def create_shop(data: schemas.CreateShops, db: Session = Depends(get_db)):
         "message": "เพิ่มร้านค้าสำเร็จ!",
     }
 
+@app.post("/api/shops/group/")
+def create_shop_group(data: schemas.CreateShops, db: Session = Depends(get_db)):
+    crud.create_shop_group(db,data)
+
 @app.get("/api/shops/}", response_model=List[schemas.Shop])
 def read_shops(db: Session = Depends(get_db)):
     return crud.get_all(db,models.Shop)

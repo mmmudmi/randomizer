@@ -18,6 +18,7 @@ class Shop(Base):
     tag = relationship("Tag", back_populates="shops") 
     is_drawn = Column(Boolean, default=False)
     time_drawn = Column(DateTime, default=None, nullable=True)
+    shop_count = Column(Integer, default=1)
 
 class Deleted(Base):
     __tablename__ = "deleted"
@@ -28,3 +29,4 @@ class Deleted(Base):
     tag = relationship("Tag", back_populates="deleted") 
     is_drawn = Column(Boolean, default=False)
     time_drawn = Column(DateTime, default=None, nullable=True)
+    shop_count = Column(Integer, default=1)

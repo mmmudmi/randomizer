@@ -16,8 +16,20 @@
           </thead>
           <tbody>
             <tr v-for="(info, index) in shopInfo" :key="index">
-              <td>{{ info.name }}</td>
-              <td>{{ info.description }}</td>
+              <td>
+                <div v-if="info.shop_count==1">{{ info.name }}</div>
+                <div v-else>
+                  <p v-for="(line, i) in this.seperate_line(info.name)" :key="i">{{ i+1 }}. {{ line }}</p>
+                </div>
+              </td>
+              <td>
+                <div v-if="info.shop_count==1">
+                  {{ info.description }}
+                </div>
+                <div v-else>
+                  <p  v-for="(line, i) in this.seperate_line(info.description)" :key="i">- {{ line }}</p>
+                </div>
+              </td>
               <td class="delete" @click="deleteShop(info.id)">x</td>
             </tr>
           </tbody>
@@ -55,10 +67,14 @@
         this.dropDownID = localStorage.getItem('dropDownID');
         this.dropDownText = localStorage.getItem('dropDownText');
         axios.get("http://localhost:80/api/shops/tag/"+this.dropDownID)
-          .then((res)=>
-            {this.shopInfo = res.data;
-            this.length = res.data.length;}
-          )
+          .then((res)=> {
+            this.shopInfo = res.data;
+            this.length = res.data.length;
+            console.log(res.data)
+          })
+      },
+      seperate_line(text){
+        return text.split('\n')
       },
       deleteShop(shopID){
         axios.delete("http://localhost:80/api/shops/"+shopID)

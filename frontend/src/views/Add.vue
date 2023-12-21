@@ -12,7 +12,14 @@
         label="ชื่อ คำอธิบาย (ใส่หลายร้านพร้อมกันได้)"
         single-line
         class="custom-textarea"
-        v-else
+        v-if="add_many_isActivate"
+      ></v-textarea>
+      <v-textarea
+        v-model="group_input"
+        label="ชื่อ คำอธิบาย (สำหรับร้านค้าที่ต้องการติดกัน)"
+        single-line
+        class="custom-textarea"
+        v-if="add_group_isActivate"
       ></v-textarea>
       <div>
         <div>
@@ -23,7 +30,7 @@
           <button class="dialog-btn" @click="add_many_prep()" v-if="this.add_many_isActivate"> + เพิ่ม </button>
           <button class="nonactivate-dialog-btn" @click="add_many_handle" v-else>เพิ่มหลายร้าน</button>
           <!-- add group -->
-          <button class="dialog-btn" @click="" v-if="this.add_group_isActivate">+เพิ่ม</button>
+          <button class="dialog-btn" @click="add_group_prep()" v-if="this.add_group_isActivate">+เพิ่ม</button>
           <button class="nonactivate-dialog-btn" @click="add_group_handle" v-else>เพิ่มร้านติดกัน</button>
         </div>
         </div>
@@ -41,6 +48,7 @@
     data(){
       return{
         shops_input: "",
+        group_input: "",
         name_input: "",
         description_input: "",
         shops: [],
@@ -109,12 +117,49 @@
         } 
       },
       add_one_prep(){
+        if (this.name_input.length==0 & this.description_input.length==0) {
+          this.showCopyFail = true
+          setTimeout(() => {
+                this.showCopyFail = false;
+              }, 1000);
+          return;
+        }
         let shops = []
         shops.push({"name":this.name_input,"description":this.description_input})
         this.add(shops)
         this.name_input = ""
         this.description_input = ""
       },
+      add_group_prep(){
+        if (this.group_input.length==0) {
+          this.showCopyFail = true
+          setTimeout(() => {
+                this.showCopyFail = false;
+              }, 1000);
+        } else {
+          let shops = [];
+          for (let line of this.group_input.split('\n')) {
+            let split = line.split('\t')
+            if (split.length == 1 ) {
+              shops.push({"name":split[0],"description":"-"})
+            }else{
+              shops.push({"name":split[0],"description":split[1]})
+            }
+          }
+          let data = {
+            "shops" : shops,
+            "tag_id": localStorage.getItem('dropDownID')
+          }
+          axios.post("http://localhost:80/api/shops/group/",data)
+            .then ((res) => {
+              this.group_input = "";
+              this.showCopySuccess = true;
+              setTimeout(() => {
+                this.showCopySuccess = false;
+              }, 1000);
+            })
+        }
+      }
       
     },
     watch: {

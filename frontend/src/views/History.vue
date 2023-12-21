@@ -19,8 +19,18 @@
           <tbody>
             <tr v-for="(info, index) in shopInfo" :key="index">
               <td style="font-size: 12px;">{{ info.time_drawn }}</td>
-              <td @click="this.copyToClipboard(info.name)">{{ info.name }}</td>
-              <td @click="this.copyToClipboard(info.description)">{{ info.description }}</td>
+              <td v-if="info.shop_count==1" @click="this.copyToClipboard(info.name)">{{ info.name }}</td>
+              <td v-else @click="this.copyToClipboard(this.seperate_line(info.name)[0])">
+                <div>
+                  <p class="single-line" v-for="(line, i) in this.seperate_line(info.name)" :key="i">{{ i+1 }}. {{ line }}</p>
+                </div>
+              </td>
+              <td v-if="info.shop_count==1" @click="this.copyToClipboard(info.description)">{{ info.description }}</td>
+              <td v-else @click="this.copyToClipboard(this.seperate_line(info.description)[0])">
+                <div>
+                  <p class="single-line" v-for="(line, i) in this.seperate_line(info.description)" :key="i">{{ i+1 }}. {{ line }}</p>
+                </div>
+              </td>
               <td class="redraw" @click="this.redraw(info.id)">  <i class="gg-undo"></i></td>
             </tr>
           </tbody>
@@ -106,7 +116,10 @@
         }
 
         document.body.removeChild(textArea);
-      }
+      },
+      seperate_line(text){
+        return text.split('\n')
+      },
     },
     beforeMount() {
       this.fetchData();

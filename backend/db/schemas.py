@@ -10,9 +10,10 @@ class ShopItem(BaseModel):
 
 class Shop(ShopItem):
     id: int | None = None
-    # name: str
-    # description: str
+    name: str
+    description: str
     tag_id: int
+    shop_count: int
 
     class Config:
         orm_mode = True
@@ -32,6 +33,7 @@ class ShopDetails(BaseModel):
     tag_id: int
     is_drawn: bool
     time_drawn: datetime
+    shop_count: int
 
     class Config:
         orm_mode = True
