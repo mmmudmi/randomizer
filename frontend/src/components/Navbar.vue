@@ -3,7 +3,7 @@
     <v-row align="center">
       <div>
         <!-- Logo on the left -->
-        <v-img class="logo" src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t39.30808-6/411397878_2581798595320282_3495311650992476261_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=3635dc&_nc_ohc=yvPyeLXO5NsAX8ghSzX&_nc_ht=scontent.fbkk5-3.fna&oh=00_AfCfd4N2_FrAT9iD0DFHQlDsUIkW-XqqusarO01j3n23jQ&oe=6582D3EA"
+        <v-img class="logo" src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/412271884_2583471718486303_6044273708648235419_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=3635dc&_nc_ohc=hcQHpV_0NC4AX_l7HWx&_nc_ht=scontent.fbkk5-6.fna&oh=00_AfCP159oaDnh8D0Cfi5HlrKpB10lYjCUYwqNck3_R4LZEA&oe=6585AA55"
         @click="navigateTo('main')"
         ></v-img>
       </div>
@@ -131,6 +131,7 @@ export default {
 .left-side-Navbar{
   position: absolute;
   right: 1pc;
+  top: 1pc;
 }
 
 

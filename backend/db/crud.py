@@ -96,7 +96,6 @@ def shop_to_deleted(db: Session, shop_id: int):
             time_drawn=func.convert_tz(func.now(), 'UTC', 'Asia/Bangkok'),
             shop_count= shop_to_move.shop_count,
         )
-
         db.add(deleted_shop)
         db.delete(shop_to_move)
         db.commit()

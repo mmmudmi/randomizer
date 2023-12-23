@@ -151,4 +151,9 @@
     overflow: auto;
   }
 
+.single-line {
+  white-space: nowrap;
+  overflow-x: scroll;
+  width: 100%; /* Optionally, set a specific width */
+}
 </style>

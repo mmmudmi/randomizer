@@ -27,7 +27,6 @@
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "video-player": "^0.0.1",
-    "video.js": "^8.6.1",
     "vue": "^3.3.7",
     "vue-core-video-player": "^0.2.0",
     "vue-hls-player": "^1.0.6",
