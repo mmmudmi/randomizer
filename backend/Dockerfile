@@ -4,13 +4,13 @@ FROM python:3.11
 WORKDIR /app
 
 # Copy the requirements.txt file into the container at /app
-COPY ./backend/requirements.txt .
+COPY /backend/requirements.txt .
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /app
-COPY ./ ./
+COPY . .
 
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
