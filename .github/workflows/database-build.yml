@@ -1,4 +1,4 @@
-name: Build Backend CI
+name: Build Database CI
 
 on:
   push:
