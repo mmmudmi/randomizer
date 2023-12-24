@@ -2,10 +2,9 @@
   <nav class="Navbar">
     <v-row align="center">
       <div>
-        <!-- Logo on the left -->
-        <v-img class="logo" src="https://scontent.fbkk5-6.fna.fbcdn.net/v/t39.30808-6/412271884_2583471718486303_6044273708648235419_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=3635dc&_nc_ohc=hcQHpV_0NC4AX_l7HWx&_nc_ht=scontent.fbkk5-6.fna&oh=00_AfCP159oaDnh8D0Cfi5HlrKpB10lYjCUYwqNck3_R4LZEA&oe=6585AA55"
-        @click="navigateTo('main')"
-        ></v-img>
+        <button class="Navbar-btn" 
+          :class="{'Navbar-btn Hightlighted': $route.name === 'main'}"
+          @click="navigateTo('main')">จับฉลาก</button>
       </div>
 
       <div class="left-side-Navbar">
@@ -27,10 +26,6 @@
           <button class="Navbar-btn" 
           :class="{'Navbar-btn Hightlighted': $route.name === 'remaining'}"
           @click="navigateTo('remaining')">รายชื่อที่เหลือ</button>
-          <!-- <button class="Navbar-btn" 
-          :class="{'Navbar-btn Hightlighted': $route.name === 'history' }"
-          @click="navigateTo('history')">ประวัติ</button> -->
-
           <div class="dropdown">
             <button @click="historyDropDown()" class="dropbtn" style="width: 7pc;">
               ประวัติ

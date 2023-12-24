@@ -34,7 +34,7 @@
             this.dialog = false,
             axios.delete("http://localhost:80/api/reset/")
               .then((res)=> {
-                this.fetchData()
+                window.location.reload(true);
               })
             localStorage.setItem('recentDrawn','-')
             // window.location.reload(true);
