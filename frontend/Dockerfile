@@ -2,12 +2,11 @@ FROM node:16 as builder
 
 WORKDIR /app
 
-COPY /package.json /yarn.lock ./
+# COPY /package.json /yarn.lock ./
 COPY ./ ./
-# RUN yarn add axios
-# RUN yarn global add @vue/cli
-RUN npm install
-RUN npm run dev
+RUN yarn add axios
+RUN yarn install
+RUN yarn build
 
 FROM nginx:alpine3.18 as production-stage
 RUN mkdir /app
