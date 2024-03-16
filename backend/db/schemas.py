@@ -45,6 +45,15 @@ class Tag(BaseModel):
     class Config:
         orm_mode = True 
 
+class TagInfo(BaseModel):
+    id: int | None = None
+    name: str
+    count: int
+
+    class Config:
+        orm_mode = True 
+
+
 
 
     

@@ -2,9 +2,23 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from . import schemas, models
 import random
+from typing import List
+
 
 def get_all(db: Session, model: models.Base):
     return db.query(model).all()
+
+def get_tags_info(db: Session):
+    all_tags = db.query(models.Tag).all()
+    list_tag_info = []
+    for tag in all_tags:
+        tag_info = schemas.TagInfo(
+            id=tag.id,
+            name=tag.name,
+            count=len(tag.shops)
+        )
+        list_tag_info.append(tag_info)
+    return list_tag_info
 
 def get_by_id(db: Session, model: models.Base, id: int):
     return db.query(model).filter(model.id == id).first()
@@ -64,9 +78,9 @@ def redraw_all(db: Session, tag_id: int):
         shop.time_drawn = None
     db.commit()
 
-def create_tag(db: Session, tag: schemas.Tag):
+def create_tag(db: Session, tag_name: str):
     db_tag = models.Tag(
-        name = tag.name,
+        name = tag_name,
     )
     db.add(db_tag)
     db.commit()

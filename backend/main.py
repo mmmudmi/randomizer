@@ -116,13 +116,17 @@ def history_by_tag(tag_id: int, db: Session = Depends(get_db)):
     return crud.history_by_tag(db, tag_id)
 
 #----- TAGS --------
-@app.post("/api/tags/", response_model=schemas.Tag)
-def create_tag(tag: schemas.Tag, db: Session = Depends(get_db)):
-    return crud.create_tag(db, tag)
+@app.post("/api/tag/{tag_name}")
+def create_tag(tag_name: str, db: Session = Depends(get_db)):
+    return crud.create_tag(db, tag_name)
 
 @app.get("/api/tags/", response_model=List[schemas.Tag])
 def get_tags(db: Session = Depends(get_db)):
     return crud.get_all(db,models.Tag)
+
+@app.get("/api/tagsInfo/", response_model=List[schemas.TagInfo])
+def get_tags_info(db: Session = Depends(get_db)):
+    return crud.get_tags_info(db)
 
 @app.delete("/api/tags/{tag_id}")
 def delete_tag(tag_id: int, db: Session = Depends(get_db)):

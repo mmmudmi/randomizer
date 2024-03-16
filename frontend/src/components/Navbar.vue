@@ -14,12 +14,15 @@
               <i class="fa fa-caret-down" style="position: absolute; right: 1.5pc;top: 1pc"></i>
             </button>
             <div id="myDropdown" class="dropdown-content">
+              <a v-if="dropDownContents.length==0" style="text-align: center; color: gray;"> ไม่มี </a>
               <a v-for="(link, index) in dropDownContents" :key="index" @click="handleDropDownClick(link.id,link.name)">
                 {{ link.name }}
               </a>
             </div>
           </div>
-          
+          <button class="Navbar-btn" 
+          :class="{'Navbar-btn Hightlighted': $route.name === 'tag'}"
+          @click="navigateTo('tag')">แก้ไขหมวดหมู่</button>
           <button class="Navbar-btn" 
           :class="{'Navbar-btn Hightlighted': $route.name === 'add'}"
           @click="navigateTo('add')">+ เพิ่ม</button>

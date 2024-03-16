@@ -21,7 +21,7 @@ CREATE TABLE shops (
     is_drawn boolean,
     time_drawn DateTime,
     shop_count int,
-    foreign key(tag_id) references tags (id)
+    foreign key(tag_id) references tags (id) ON DELETE CASCADE
 );
 
 CREATE TABLE deleted (
@@ -32,7 +32,7 @@ CREATE TABLE deleted (
     is_drawn boolean,
     time_drawn DateTime,
     shop_count int,
-    foreign key(tag_id) references tags (id)
+    foreign key(tag_id) references tags (id) ON DELETE CASCADE
 );
 
 INSERT INTO tags (name) VALUES ('อาหาร');

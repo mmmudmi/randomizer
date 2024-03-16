@@ -5,6 +5,7 @@
       <div class="info">
         <v-alert v-if="showCopySuccess" text="เพิ่มร้านค้าสำเร็จ" type="success" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
         <v-alert v-if="showCopyFail" text="ใส่ข้อมูลร้านค้าก่อนจ้า" type="warning" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
+        <v-alert v-if="no_chosen_tag_id" text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
         <v-text-field label="ชื่อ" single-line v-model="name_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;" @input="this.add_one_input_handle()"></v-text-field>
         <v-text-field label="คำอธิบาย" single-line v-model="description_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;"></v-text-field>
         <v-textarea
@@ -54,6 +55,7 @@
         shops: [],
         showCopySuccess: false,
         showCopyFail: false,
+        no_chosen_tag_id: false,
         add_one_isActivate: false,
         add_many_isActivate: true,
         add_group_isActivate: false,
@@ -66,6 +68,7 @@
         this.add_group_isActivate = false;
       },
       add_many_prep(){
+        this.no_tag_id_check();
         if (this.shops_input.length==0) {
           this.showCopyFail = true
           setTimeout(() => {
@@ -108,6 +111,14 @@
             }, 1000);
           })
       },
+      no_tag_id_check(){
+        if (!localStorage.getItem('dropDownID')) {
+          this.no_chosen_tag_id = true;
+          setTimeout(() => {
+                this.no_chosen_tag_id = false;
+              }, 1000);
+        }
+      },
       add_one_input_handle(){
         let split = this.name_input.split('\t')
         console.log(split)
@@ -117,6 +128,7 @@
         } 
       },
       add_one_prep(){
+        this.no_tag_id_check();
         if (this.name_input.length==0 & this.description_input.length==0) {
           this.showCopyFail = true
           setTimeout(() => {
@@ -131,6 +143,7 @@
         this.description_input = ""
       },
       add_group_prep(){
+        this.no_tag_id_check();
         if (this.group_input.length==0) {
           this.showCopyFail = true
           setTimeout(() => {
@@ -162,7 +175,8 @@
       }
       
     },
-    watch: {
+    beforeMount() {
+
     }
 
   }

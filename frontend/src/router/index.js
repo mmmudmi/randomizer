@@ -13,6 +13,11 @@ const routes = [
         component: () => import('@/views/Main.vue'),
       },
       {
+        path: '/tag',
+        name: 'tag',
+        component: () => import('@/views/Tag.vue'),
+      },
+      {
         path: '/add',
         name: 'add',
         component: () => import('@/views/Add.vue'),

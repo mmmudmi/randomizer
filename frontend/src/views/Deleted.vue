@@ -3,7 +3,8 @@
     <Navbar v-model="dropDownID" />
     <div class="content">
       <div class="info">
-        <p style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">ลบล่าสุด หมวด{{ this.dropDownText }}</p>
+        <p v-if="!no_tag_id"  style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">ลบล่าสุด หมวด{{ this.dropDownText }}</p>
+        <v-alert v-else text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
         <div class="table-container">
           <table v-if="length!=0"  class="shop-info-table">
           <thead>
@@ -34,7 +35,7 @@
             </tr>
           </tbody>
         </table>
-        <p v-else style="color: white;text-align: center;font-size: 2pc;">-</p>
+        <p v-else-if="!no_tag_id" style="color: white;text-align: center;font-size: 2pc;">-</p>
         </div>
         <EmptyDeleted />
       </div>
@@ -57,12 +58,14 @@
         dropDownID: null,
         shopInfo: {},
         length: 0,
+        no_tag_id: false,
       }
 
     },
     methods: {
       fetchData(){
         this.dropDownID = localStorage.getItem('dropDownID');
+        if (!this.dropDownID) {this.no_tag_id = true}
         this.dropDownText = localStorage.getItem('dropDownText');
         axios.get("http://localhost:80/api/deleted/tag/"+this.dropDownID)
           .then((res)=> {
