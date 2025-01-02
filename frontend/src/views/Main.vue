@@ -1,12 +1,14 @@
 <template>
   <div class="page">
     <img src="https://i.ibb.co/vvpG5v9/logo3d.png" class="watermark">
+    
     <Navbar v-model="dropDownID" />
+    
     <div class="content">
 
       <div class="info">
-        <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
-        <v-alert v-if="showCopyError" text="ไม่มีร้านค้าให้จับฉลาก" type="error" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopyError" text="ไม่มีร้านค้าให้จับฉลาก" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
         <button v-if="isDrawing" class="yellow-btn" @click="random()">สุ่มร้านค้า</button>
         <div v-else class="show-result" >
           <div v-if="this.shop_count==1">
@@ -82,7 +84,6 @@
         if (this.dropDownID == null) {
           alert("เลือกหมวดร้านค้าก่อนกดสุ่ม")
         } else {
-          console.log(this.dropDownID)
           axios.get('/api/shops/draw/tag/'+this.dropDownID)
             .then((res) => {
               this.name = res.data.name;

@@ -3,7 +3,7 @@
     <Navbar v-model="dropDownID" />
     <div class="content">
       <div class="info">
-        <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
         <p v-if="!no_tag_id" style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">ร้านค้าที่ถูกจับฉลากแล้ว หมวด{{ this.dropDownText }}</p>
         <v-alert v-else text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
 
@@ -80,7 +80,6 @@
           })
       },
       deleteShop(shopID){
-        console.log("delete shop with ID: "+shopID)
         this.fetchData();
       },
       redraw(shopID){

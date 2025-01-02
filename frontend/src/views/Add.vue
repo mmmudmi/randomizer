@@ -3,8 +3,8 @@
     <Navbar v-model="dropDownID" />
     <div class="content">
       <div class="info">
-        <v-alert v-if="showCopySuccess" text="เพิ่มร้านค้าสำเร็จ" type="success" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
-        <v-alert v-if="showCopyFail" text="ใส่ข้อมูลร้านค้าก่อนจ้า" type="warning" style="position: fixed; top: 1pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopySuccess" text="เพิ่มร้านค้าสำเร็จ" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopyFail" text="ใส่ข้อมูลร้านค้าก่อนจ้า" type="warning" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
         <v-alert v-if="no_chosen_tag_id" text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
         <v-text-field label="ชื่อ" single-line v-model="name_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;" @input="this.add_one_input_handle()"></v-text-field>
         <v-text-field label="คำอธิบาย" single-line v-model="description_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;"></v-text-field>
@@ -121,7 +121,6 @@
       },
       add_one_input_handle(){
         let split = this.name_input.split('\t')
-        console.log(split)
         if (split.length > 1) {
           this.name_input = split[0]
           this.description_input = split[1]

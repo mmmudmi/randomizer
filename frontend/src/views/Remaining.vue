@@ -74,7 +74,6 @@
           .then((res)=> {
             this.shopInfo = res.data;
             this.length = res.data.length;
-            console.log(res.data)
           })
       },
       seperate_line(text){
