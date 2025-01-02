@@ -70,7 +70,7 @@
         this.dropDownID = localStorage.getItem('dropDownID');
         if (!this.dropDownID) {this.no_tag_id = true}
         this.dropDownText = localStorage.getItem('dropDownText');
-        axios.get("http://localhost:80/api/history/tag/"+this.dropDownID)
+        axios.get("/api/history/tag/"+this.dropDownID)
           .then((res)=> {
             this.shopInfo = res.data;
             this.shopInfo.sort((a, b) => {
@@ -84,7 +84,7 @@
         this.fetchData();
       },
       redraw(shopID){
-        axios.put("http://localhost:80/api/shops/redraw/"+shopID)
+        axios.put("/api/shops/redraw/"+shopID)
           .then((res)=> {
             this.fetchData()
           })

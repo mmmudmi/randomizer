@@ -102,7 +102,7 @@
           "shops" : shops,
           "tag_id": localStorage.getItem('dropDownID')
         }
-        axios.post("http://localhost:80/api/shops/",data)
+        axios.post("/api/shops/",data)
           .then ((res) => {
             this.shops_input = "";
             this.showCopySuccess = true;
@@ -163,7 +163,7 @@
             "shops" : shops,
             "tag_id": localStorage.getItem('dropDownID')
           }
-          axios.post("http://localhost:80/api/shops/group/",data)
+          axios.post("/api/shops/group/",data)
             .then ((res) => {
               this.group_input = "";
               this.showCopySuccess = true;

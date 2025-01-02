@@ -70,7 +70,7 @@
         this.dropDownID = localStorage.getItem('dropDownID');
         if (!this.dropDownID) {this.no_tag_id = true}
         this.dropDownText = localStorage.getItem('dropDownText');
-        axios.get("http://localhost:80/api/shops/tag/"+this.dropDownID)
+        axios.get("/api/shops/tag/"+this.dropDownID)
           .then((res)=> {
             this.shopInfo = res.data;
             this.length = res.data.length;
@@ -81,7 +81,7 @@
         return text.split('\n')
       },
       deleteShop(shopID){
-        axios.delete("http://localhost:80/api/shops/"+shopID)
+        axios.delete("/api/shops/"+shopID)
           .then((res)=>
             this.fetchData()
           )

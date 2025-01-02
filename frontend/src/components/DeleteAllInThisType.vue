@@ -32,7 +32,7 @@
       methods: {
         deleteAll() {
             this.dialog = false,
-            axios.delete("http://localhost:80/api/shops/undrawn/tag/"+localStorage.getItem('dropDownID'))
+            axios.delete("/api/shops/undrawn/tag/"+localStorage.getItem('dropDownID'))
               .then ((res) => {
                 window.location.reload(true);
               })

@@ -33,21 +33,12 @@ services:
       dockerfile: ./backend/Dockerfile
     environment:
       - DATABASE_URL=mariadb://admin:password@database:3306/randomizer
-      - REDIS_HOST=redis
     depends_on:
       - database
-      # - redis
     ports:
       - "80:80"
     networks:
       - back-office
-
-  # redis:
-  #   image: redis
-  #   restart: always
-  #   command: redis-server --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
-  #   networks:
-  #     - back-office
   
 networks:
   back-office:

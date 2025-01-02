@@ -101,7 +101,7 @@ export default {
       window.location.reload(true);
     },
     getAllTypes(){
-      axios.get('http://localhost:80/api/tags')
+      axios.get('/api/tags')
             .then((res) => {
               this.dropDownContents = res.data;
             })

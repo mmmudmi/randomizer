@@ -32,7 +32,7 @@
       methods: {
         deleteAll() {
             this.dialog = false,
-            axios.delete("http://localhost:80/api/reset/")
+            axios.delete("/api/reset/")
               .then((res)=> {
                 window.location.reload(true);
               })

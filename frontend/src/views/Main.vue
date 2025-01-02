@@ -82,7 +82,7 @@
           alert("เลือกหมวดร้านค้าก่อนกดสุ่ม")
         } else {
           console.log(this.dropDownID)
-          axios.get('http://localhost:80/api/shops/draw/tag/'+this.dropDownID)
+          axios.get('/api/shops/draw/tag/'+this.dropDownID)
             .then((res) => {
               this.name = res.data.name;
               this.description = res.data.description;
@@ -133,7 +133,7 @@
         document.body.removeChild(textArea);
       },
       confirmDrawing(){
-        axios.put("http://localhost:80/api/shops/confirm/draw/"+this.currentShopID)
+        axios.put("/api/shops/confirm/draw/"+this.currentShopID)
           .then((res)=>{
           })
         this.isDrawing = true;

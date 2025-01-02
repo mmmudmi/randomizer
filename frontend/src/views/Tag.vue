@@ -58,7 +58,7 @@
     methods: {
       fetchData(){
         this.dropDownID = localStorage.getItem('dropDownID');
-        axios.get("http://localhost:80/api/tagsInfo/")
+        axios.get("/api/tagsInfo/")
           .then((res)=> {
             this.tagsInfo = res.data;
             this.length = res.data.length;
@@ -68,13 +68,13 @@
         return text.split('\n')
       },
       addTag(){
-        axios.post("http://localhost:80/api/tag/"+this.tag_input)
+        axios.post("/api/tag/"+this.tag_input)
           .then((res)=> {
             window.location.reload(true);
           })
       },
       deleteTag(id){
-        axios.delete("http://localhost:80/api/tags/"+id)
+        axios.delete("/api/tags/"+id)
           .then((res)=> {
             if (localStorage.getItem('dropDownID') == id) {
               localStorage.setItem('dropDownText', "เลือกหมวด")

@@ -33,7 +33,7 @@
       methods: {
         redrawAll() {
             this.dialog = false,
-            axios.put("http://localhost:80/api/shops/redraw/tag/"+localStorage.getItem('dropDownID'))
+            axios.put("/api/shops/redraw/tag/"+localStorage.getItem('dropDownID'))
             .then((res)=> {
                 window.location.reload(true);
             })
