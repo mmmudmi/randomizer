@@ -1,13 +1,12 @@
 <template>
   <nav class="Navbar">
     <v-row align="center">
-      <div>
+      <div class="right-side-Navbar">
         <button class="Navbar-btn" 
           :class="{'Navbar-btn Hightlighted': $route.name === 'main'}"
-          @click="navigateTo('main')">จับฉลาก</button>
-      </div>
-
-      <div class="left-side-Navbar">
+          @click="navigateTo('main')">จับฉลาก
+        </button>
+        <div class="right-buttons">
           <div class="dropdown">
             <button @click="dropDown()" class="dropbtn">
               {{ dropDownText }}
@@ -21,14 +20,14 @@
             </div>
           </div>
           <button class="Navbar-btn" 
-          :class="{'Navbar-btn Hightlighted': $route.name === 'tag'}"
-          @click="navigateTo('tag')">แก้ไขหมวดหมู่</button>
+            :class="{'Navbar-btn Hightlighted': $route.name === 'tag'}"
+            @click="navigateTo('tag')">แก้ไขหมวดหมู่</button>
           <button class="Navbar-btn" 
-          :class="{'Navbar-btn Hightlighted': $route.name === 'add'}"
-          @click="navigateTo('add')">+ เพิ่ม</button>
+            :class="{'Navbar-btn Hightlighted': $route.name === 'add'}"
+            @click="navigateTo('add')">+ เพิ่ม</button>
           <button class="Navbar-btn" 
-          :class="{'Navbar-btn Hightlighted': $route.name === 'remaining'}"
-          @click="navigateTo('remaining')">รายชื่อที่เหลือ</button>
+            :class="{'Navbar-btn Hightlighted': $route.name === 'remaining'}"
+            @click="navigateTo('remaining')">รายชื่อที่เหลือ</button>
           <div class="dropdown">
             <button @click="historyDropDown()" class="dropbtn" style="width: 7pc;">
               ประวัติ
@@ -40,7 +39,7 @@
               </a>
             </div>
           </div>
-
+        </div>
       </div>
     </v-row>
   </nav>
@@ -101,7 +100,7 @@ export default {
       window.location.reload(true);
     },
     getAllTypes(){
-      axios.get('/api/tags')
+      axios.get('/api/tags/')
             .then((res) => {
               this.dropDownContents = res.data;
             })
@@ -126,12 +125,18 @@ export default {
   height: 5.5pc;
 }
 
-.left-side-Navbar{
+/* .right-side-Navbar{
   position: absolute;
   right: 1pc;
   top: 1pc;
-}
+} */
 
+.right-side-Navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 
 .logo {
   width: 6pc;
@@ -146,13 +151,15 @@ export default {
   border-radius: 30px;
   background-color: #000000;
   color: #ffffff;
-  padding: 12px 17px 12px 17px;
+  padding: 12px 17px;
   font-size: 14px;
   font-weight: 700;
   margin-left: 0.3pc;
   margin-right: 0.3pc;
   border: 1.6px solid #ffffff ;
   transition: padding 0.3s ease;
+  min-width: 100px;
+  text-align: center;
 }
 .Hightlighted {
   background-color: #ffffff;
