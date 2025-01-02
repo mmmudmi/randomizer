@@ -1,5 +1,6 @@
 <template>
   <div class="page">
+    <img src="https://i.ibb.co/vvpG5v9/logo3d.png" class="watermark">
     <Navbar v-model="dropDownID" />
     <div class="content">
 
@@ -165,11 +166,21 @@
   flex-direction: column;
 }
 
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  z-index: 0;
+}
+
 .content {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
 .info {
