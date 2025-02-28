@@ -9,4 +9,4 @@ docker compose up -d
 ```
 
 ## Developer
-- Pearploy Chaicharoensin (Mudmee)
+- Pearploy Chaicharoensin
