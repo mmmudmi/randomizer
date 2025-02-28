@@ -4,17 +4,16 @@
     <div class="content">
       <div class="info">
         <div style="display: flex; align-items: center;">
-          <v-text-field label="ชื่อหมวดหมู่ที่ต้องการเพิ่ม" single-line v-model="tag_input" variant="solo" style="width: 60vw;" append-inner-icon="mdi-plus" @input="search_similar()" @click:append-inner="addTag()">
+          <v-text-field label="Category name to add" single-line v-model="tag_input" variant="solo" style="width: 60vw;" append-inner-icon="mdi-plus" @input="search_similar()" @click:append-inner="addTag()">
           </v-text-field>
         </div>
-
 
         <div class="table-container">
           <table v-if="length!=0" class="shop-info-table">
           <thead>
             <tr>
-              <th style="text-align: center;">หมวดหมู่ทั้งหมด ({{ this.length }})</th>
-              <th style="text-align: center;width: 30%;">ร้านค้า</th>
+              <th style="text-align: center;">All Categories ({{ this.length }})</th>
+              <th style="text-align: center;width: 30%;">Shops</th>
               <th style="text-align: center;width: 1%;"></th>
             </tr>
           </thead>
@@ -22,7 +21,6 @@
             <tr v-for="(info, index) in tagsInfo" :key="index">
               <td>
                 <p style="cursor: pointer;" @click="pick_tag(info.id,info.name)">{{info.name}}</p>
-                
               </td>
               <td style="text-align: center;">
                 {{info.count}}
@@ -31,7 +29,7 @@
             </tr>
           </tbody>
         </table>
-        <p v-else style="color: grey;text-align: center;font-size: 1.5pc;">ไม่มีหมวดหมู่ให้เลือก</p>
+        <p v-else style="color: grey;text-align: center;font-size: 1.5pc;">No categories available</p>
         </div>
       </div>
     </div>
@@ -41,7 +39,6 @@
 
 <script>
   import Navbar from '@/components/Navbar.vue'
-
   import axios from 'axios';
   export default {
     name: "Main",
@@ -77,7 +74,7 @@
         axios.delete("/api/tags/"+id)
           .then((res)=> {
             if (localStorage.getItem('dropDownID') == id) {
-              localStorage.setItem('dropDownText', "เลือกหมวด")
+              localStorage.setItem('dropDownText', "Select Category")
               localStorage.removeItem('dropDownID')
               window.location.reload(true);
             } 
@@ -143,8 +140,6 @@
     padding: 10px 15px 10px 15px;
     font-size: 20px;
     font-weight: 800;
-    /* margin-left: 0.3pc;
-    margin-right: 0.3pc; */
     transition:  0.3s ease;
     width: 6pc;
     margin: 0.5pc;

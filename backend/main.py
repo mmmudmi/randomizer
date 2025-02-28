@@ -29,7 +29,7 @@ def get_db():
 def create_shop(data: schemas.CreateShops, db: Session = Depends(get_db)):
     crud.create_shop(db,data)
     return {
-        "message": "เพิ่มร้านค้าสำเร็จ!",
+        "message": "Shop added successfully!",
     }
 
 @app.post("/api/shops/group/")
@@ -52,7 +52,7 @@ def read_shop(shop_id: int, db: Session = Depends(get_db)):
 def delete_shop(shop_id: int, db: Session = Depends(get_db)):
     crud.delete_by_shopId(db, shop_id)
     return {
-        "message": "ลบสำเร็จ!"
+        "message": "Deleted successfully!"
     }
 
 @app.delete("/api/reset/")
@@ -60,21 +60,21 @@ def delete_all( db: Session = Depends(get_db)):
     crud.delete_all(db, models.Shop)
     crud.delete_all(db, models.Deleted)
     return {
-        "message": "ลบร้านค้าทั้งหมดสำเร็จ!"
+        "message": "All shops deleted successfully!"
     }
 
 @app.delete("/api/shops/drawn/tag/{tag_id}")
 def delete_shops_drawn(tag_id: int, db: Session = Depends(get_db)):
     crud.delete_all_by_tag_id_drawn(db, tag_id)
     return {
-        "message": "ลบร้านค้าทั้งหมดสำเร็จ!"
+        "message": "All shops deleted successfully!"
     }
 
 @app.delete("/api/shops/undrawn/tag/{tag_id}")
 def delete_shops_undrawn(tag_id: int, db: Session = Depends(get_db)):
     crud.delete_all_by_tag_id_undrawn(db, tag_id)
     return {
-        "message": "ลบร้านค้าทั้งหมดสำเร็จ!"
+        "message": "All shops deleted successfully!"
     }
 
 @app.put("/api/shops/confirm/draw/{shop_id}", response_model=schemas.ShopDetails)
@@ -89,14 +89,14 @@ def draw(tag_id: int, db: Session = Depends(get_db)):
 def redraw(shop_id: int, db: Session = Depends(get_db)): 
     crud.redraw(db, shop_id)
     return {
-        "message": "เรียกจับใหม่สำเร็จ!"
+        "message": "Redraw successful!"
     }
 
 @app.put("/api/shops/redraw/tag/{tag_id}")
 def redraw_all(tag_id: int, db: Session = Depends(get_db)): 
     crud.redraw_all(db, tag_id)
     return {
-        "message": "เรียกจับใหม่ทั้งหมดสำเร็จ!"
+        "message": "All redraws successful!"
     }
 
 @app.get("/api/history/tag/{tag_id}", response_model=List[schemas.ShopDetails])
@@ -120,7 +120,7 @@ def get_tags_info(db: Session = Depends(get_db)):
 def delete_tag(tag_id: int, db: Session = Depends(get_db)):
     crud.delete_by_id(db, models.Tag, tag_id)
     return {
-        "message": "ลบสำเร็จ!"
+        "message": "Deleted successfully!"
     }
 
 #----- DELETED --------

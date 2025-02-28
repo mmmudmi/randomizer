@@ -8,14 +8,14 @@
         </template>
         <v-card class="dialog" style=" border-radius: 1.6pc;">
           <v-card-title style="text-align: center;font-weight: 800;padding-top: 1.3pc;font-size: 25px;">
-            ลบทั้งหมด
+            Delete All
           </v-card-title>
-          <p style="font-size: 15px;text-align: center;">ลบข้อมูลร้านค้าทุกหมวดหมู่รวมถึงลบประวัติ ไม่สามารถกู้คืนได้อีก</p>
+          <p style="font-size: 15px;text-align: center;">Delete all store data in all categories, including history. This action cannot be undone.</p>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <button class="dialog-btn" @click="dialog = false"> ยกเลิก </button>
-            <button class="dialog-btn" style="background-color: #7FB02F;" @click="deleteAll()"> ยืนยัน </button>
+            <button class="dialog-btn" @click="dialog = false"> Cancel </button>
+            <button class="dialog-btn" style="background-color: #7FB02F;" @click="deleteAll()"> Confirm </button>
           </v-card-actions>
         </v-card>
       </v-dialog>

@@ -35,12 +35,12 @@ CREATE TABLE deleted (
     foreign key(tag_id) references tags (id) ON DELETE CASCADE
 );
 
-INSERT INTO tags (name) VALUES ('อาหาร');
+INSERT INTO tags (name) VALUES ('Food');
 
-INSERT INTO tags (name) VALUES ('เครื่องดื่ม');
+INSERT INTO tags (name) VALUES ('Beverages');
 
-INSERT INTO tags (name) VALUES ('กิ๊ฟช็อป');
+INSERT INTO tags (name) VALUES ('Gift Shop');
 
-INSERT INTO tags (name) VALUES ('foodtruck');
+INSERT INTO tags (name) VALUES ('Food Truck');
 
-INSERT INTO tags (name) VALUES ('อื่นๆ');
+INSERT INTO tags (name) VALUES ('Others');

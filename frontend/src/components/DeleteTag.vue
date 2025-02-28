@@ -8,14 +8,14 @@
       </template>
       <v-card class="dialog" style=" border-radius: 1.6pc;">
         <v-card-title style="text-align: center;font-weight: 800;padding-top: 1.3pc;font-size: 25px;">
-          ลบทั้งหมด
+          Delete All
         </v-card-title>
-        <p style="font-size: 15px;text-align: center;">ลบข้อมูลร้านค้าทุกหมวดหมู่รวมถึงลบประวัติ ไม่สามารถกู้คืนได้อีก</p>
+        <p style="font-size: 15px;text-align: center;">Delete all store data in all categories, including history. This action cannot be undone.</p>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <button class="dialog-btn" @click="dialog = false"> ยกเลิก </button>
-          <button class="dialog-btn" style="background-color: #7FB02F;" @click="deleteAll()"> ยืนยัน </button>
+          <button class="dialog-btn" @click="dialog = false"> Cancel </button>
+          <button class="dialog-btn" style="background-color: #7FB02F;" @click="deleteAll()"> Confirm </button>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -44,26 +44,26 @@
 </script>
 <style>
 .delete-all-btn {
-border-radius: 30px;
-background-color: #000000;
-color: #545454;
-padding: 12px 17px 12px 17px;
-font-size: 13px;
-font-weight: 700;
-margin-left: 0.3pc;
-margin-right: 0.3pc;
-border: 1.6px solid #545454 ;
-transition: padding 0.3s ease;
-position: absolute;
-right: 1pc;
-bottom: 1pc;
-z-index: 1;
+  border-radius: 30px;
+  background-color: #000000;
+  color: #545454;
+  padding: 12px 17px 12px 17px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-left: 0.3pc;
+  margin-right: 0.3pc;
+  border: 1.6px solid #545454 ;
+  transition: padding 0.3s ease;
+  position: absolute;
+  right: 1pc;
+  bottom: 1pc;
+  z-index: 1;
 }
 .delete-all-btn:hover {
-background-color: #000000;
-border: 1.6px solid #ffffff ;
-color: #ffffff;
-padding: 14px 19px 14px 19px;
+  background-color: #000000;
+  border: 1.6px solid #ffffff ;
+  color: #ffffff;
+  padding: 14px 19px 14px 19px;
 }
 .dialog{
   width: 100%;
@@ -74,22 +74,21 @@ padding: 14px 19px 14px 19px;
 }
 
 .dialog-btn{
-border-radius: 40px;
-/* 7FB02F */
-background-color: #FF472E;
-color: #ffffff;
-padding: 10px 15px 10px 15px;
-font-size: 15px;
-font-weight: 800;
-margin-left: 0.3pc;
-margin-right: 0.3pc;
-transition:  0.3s ease;
-width: 6pc;
-margin: 0.5pc;
+  border-radius: 40px;
+  /* 7FB02F */
+  background-color: #FF472E;
+  color: #ffffff;
+  padding: 10px 15px 10px 15px;
+  font-size: 15px;
+  font-weight: 800;
+  margin-left: 0.3pc;
+  margin-right: 0.3pc;
+  transition:  0.3s ease;
+  width: 6pc;
+  margin: 0.5pc;
 }
 .dialog-btn:hover{
-font-size: 16px;
-width: 7pc;
+  font-size: 16px;
+  width: 7pc;
 }
-
 </style>

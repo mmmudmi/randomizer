@@ -3,21 +3,21 @@
     <Navbar v-model="dropDownID" />
     <div class="content">
       <div class="info">
-        <v-alert v-if="showCopySuccess" text="เพิ่มร้านค้าสำเร็จ" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
-        <v-alert v-if="showCopyFail" text="ใส่ข้อมูลร้านค้าก่อนจ้า" type="warning" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
-        <v-alert v-if="no_chosen_tag_id" text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
-        <v-text-field label="ชื่อ" single-line v-model="name_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;" @input="this.add_one_input_handle()"></v-text-field>
-        <v-text-field label="คำอธิบาย" single-line v-model="description_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;"></v-text-field>
+        <v-alert v-if="showCopySuccess" text="Shop added successfully" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <v-alert v-if="showCopyFail" text="Please enter shop information" type="warning" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <v-alert v-if="no_chosen_tag_id" text="Please select a category" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <v-text-field label="Name" single-line v-model="name_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;" @input="this.add_one_input_handle()"></v-text-field>
+        <v-text-field label="Description" single-line v-model="description_input" variant="solo" v-if="this.add_one_isActivate" style="width: 60vw;"></v-text-field>
         <v-textarea
         v-model="shops_input"
-        label="ชื่อ คำอธิบาย (ใส่หลายร้านพร้อมกันได้)"
+        label="Name Description (multiple shops can be added at once)"
         single-line
         class="custom-textarea"
         v-if="add_many_isActivate"
       ></v-textarea>
       <v-textarea
         v-model="group_input"
-        label="ชื่อ คำอธิบาย (สำหรับร้านค้าที่ต้องการติดกัน)"
+        label="Name Description (for shops that need to be grouped together)"
         single-line
         class="custom-textarea"
         v-if="add_group_isActivate"
@@ -25,14 +25,14 @@
       <div>
         <div>
           <!-- add one -->
-          <button class="dialog-btn" @click="add_one_prep()" v-if="this.add_one_isActivate">+เพิ่ม</button>
-          <button class="nonactivate-dialog-btn" @click="add_one_handle" v-else>เพิ่มทีละร้าน</button>
+          <button class="dialog-btn" @click="add_one_prep()" v-if="this.add_one_isActivate">+ Add</button>
+          <button class="nonactivate-dialog-btn" @click="add_one_handle" v-else>Add one shop</button>
           <!-- add many -->
-          <button class="dialog-btn" @click="add_many_prep()" v-if="this.add_many_isActivate"> + เพิ่ม </button>
-          <button class="nonactivate-dialog-btn" @click="add_many_handle" v-else>เพิ่มหลายร้าน</button>
+          <button class="dialog-btn" @click="add_many_prep()" v-if="this.add_many_isActivate"> + Add </button>
+          <button class="nonactivate-dialog-btn" @click="add_many_handle" v-else>Add multiple shops</button>
           <!-- add group -->
-          <button class="dialog-btn" @click="add_group_prep()" v-if="this.add_group_isActivate">+เพิ่ม</button>
-          <button class="nonactivate-dialog-btn" @click="add_group_handle" v-else>เพิ่มร้านติดกัน</button>
+          <button class="dialog-btn" @click="add_group_prep()" v-if="this.add_group_isActivate">+ Add</button>
+          <button class="nonactivate-dialog-btn" @click="add_group_handle" v-else>Add grouped shops</button>
         </div>
         </div>
       </div>

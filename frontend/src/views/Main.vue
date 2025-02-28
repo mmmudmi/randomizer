@@ -8,8 +8,8 @@
 
       <div class="info">
         <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
-        <v-alert v-if="showCopyError" text="ไม่มีร้านค้าให้จับฉลาก" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
-        <button v-if="isDrawing" class="yellow-btn" @click="random()">สุ่มร้านค้า</button>
+        <v-alert v-if="showCopyError" text="No shops available for drawing" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <button v-if="isDrawing" class="yellow-btn" @click="random()">Draw Shop</button>
         <div v-else class="show-result" >
           <div v-if="this.shop_count==1">
             <div>
@@ -44,14 +44,14 @@
             </div>
           </div>
           <div>
-            <button class="dialog-btn" @click="random()"> จับใหม่ </button>
-            <button class="dialog-btn" style="background-color: #7FB02F;" @click="confirmDrawing()"> ยืนยัน </button>
+            <button class="dialog-btn" @click="random()"> Draw Again </button>
+            <button class="dialog-btn" style="background-color: #7FB02F;" @click="confirmDrawing()"> Confirm </button>
           </div>
         </div>
         <DeleteAll />
       </div>
     </div>
-    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;font-size: 13px;cursor: pointer;" @click="copyToClipboard(this.prevDrawn)">จับล่าสุด: {{ this.prevDrawn }}</p>
+    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;font-size: 13px;cursor: pointer;" @click="copyToClipboard(this.prevDrawn)">Last Draw: {{ this.prevDrawn }}</p>
   </div>
 </template>
 
@@ -82,7 +82,7 @@
       random(){
         this.dropDownID = localStorage.getItem('dropDownID');
         if (this.dropDownID == null) {
-          alert("เลือกหมวดร้านค้าก่อนกดสุ่ม")
+          alert("Please select a category before drawing")
         } else {
           axios.get('/api/shops/draw/tag/'+this.dropDownID)
             .then((res) => {

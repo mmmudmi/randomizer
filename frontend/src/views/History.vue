@@ -4,16 +4,16 @@
     <div class="content">
       <div class="info">
         <v-alert v-if="showCopySuccess" text="Copied to clipboard!" type="success" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
-        <p v-if="!no_tag_id" style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">ร้านค้าที่ถูกจับฉลากแล้ว หมวด{{ this.dropDownText }}</p>
-        <v-alert v-else text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <p v-if="!no_tag_id" style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">Shops drawn in category {{ this.dropDownText }}</p>
+        <v-alert v-else text="Please select a category" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
 
         <div class="table-container">
           <table v-if="length!=0"  class="shop-info-table">
           <thead>
             <tr>
-              <th style="text-align: center;width: 10%;">เวลา</th>
-              <th style="text-align: center;width: 30%;">ชื่อ</th>
-              <th style="text-align: center;">รายละเอียด</th>
+              <th style="text-align: center;width: 10%;">Time</th>
+              <th style="text-align: center;width: 30%;">Name</th>
+              <th style="text-align: center;">Description</th>
               <th style="text-align: center;width: 1%;"></th>
               <!-- Add more headers as needed -->
             </tr>
@@ -42,7 +42,7 @@
         <RedrawAll />
       </div>
     </div>
-    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;">จับไปแล้ว {{ this.length }} ร้านค้า</p>
+    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;">{{ this.length }} shops drawn</p>
 
   </div>
 </template>
@@ -168,7 +168,7 @@
     border: 1.1px solid #ffffff;
     text-align: left;
     padding: 8px;
-    font-size: 14px;
+font-size: 14px;
   }
 
   .shop-info-table th {

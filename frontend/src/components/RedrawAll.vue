@@ -3,19 +3,19 @@
       <v-dialog v-model="dialog" persistent >
         <template v-slot:activator="{ props }">
           <button v-bind="props" class="delete-all-btn">
-            จับใหม่ทั้งหมด
+            Redraw All
           </button>
         </template>
         <v-card class="dialog" style=" border-radius: 1.6pc;">
           <v-card-title style="text-align: center;font-weight: 800;padding-top: 1.3pc;font-size: 25px;">
-            เรียกจับใหม่ทั้งหมด
+            Redraw All
           </v-card-title>
-          <p style="font-size: 15px;text-align: center;">นำร้านค้าที่จับฉลากแล้วในหมวดนี้มาจำใหม่ทั้งหมด</p>
+          <p style="font-size: 15px;text-align: center;">Redraw all shops in this category</p>
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <button class="dialog-btn" @click="dialog = false"> ยกเลิก </button>
-            <button class="dialog-btn" style="background-color: #7FB02F;" @click="redrawAll()"> ยืนยัน </button>
+            <button class="dialog-btn" @click="dialog = false"> Cancel </button>
+            <button class="dialog-btn" style="background-color: #7FB02F;" @click="redrawAll()"> Confirm </button>
           </v-card-actions>
         </v-card>
       </v-dialog>

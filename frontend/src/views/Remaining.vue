@@ -3,15 +3,15 @@
     <Navbar v-model="dropDownID" />
     <div class="content">
       <div class="info">
-        <p v-if="!no_tag_id" style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">ร้านค้าที่ยังไม่ถูกจับฉลาก หมวด{{ this.dropDownText }}</p>
-        <v-alert v-else text="เลือกหมวดหมู่ร้านค้าก่อน" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
+        <p v-if="!no_tag_id" style="color: white;font-weight: 600;font-size: 20px;position: relative; top: -2pc;">Undrawn shops in category {{ this.dropDownText }}</p>
+        <v-alert v-else text="Please select a category" type="error" style="position: fixed; top: 5pc; z-index: 10;"></v-alert>
 
         <div class="table-container">
           <table v-if="length!=0" class="shop-info-table">
           <thead>
             <tr>
-              <th style="text-align: center;width: 40%;">ชื่อ</th>
-              <th style="text-align: center">รายละเอียด</th>
+              <th style="text-align: center;width: 40%;">Name</th>
+              <th style="text-align: center">Description</th>
               <th style="text-align: center;width: 1%;"></th>
               <!-- Add more headers as needed -->
             </tr>
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;">เหลือ {{ this.length }} ร้านค้า</p>
+    <p style="color: white;position: relative; left: 1.5pc;bottom: 1.5pc;">Remaining {{ this.length }} shops</p>
 
   </div>
 </template>

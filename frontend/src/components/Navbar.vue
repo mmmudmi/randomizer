@@ -4,7 +4,7 @@
       <div class="right-side-Navbar">
         <button class="Navbar-btn" 
           :class="{'Navbar-btn Hightlighted': $route.name === 'main'}"
-          @click="navigateTo('main')">จับฉลาก
+          @click="navigateTo('main')">Draw Lots
         </button>
         <div class="right-buttons">
           <div class="dropdown">
@@ -13,7 +13,7 @@
               <i class="fa fa-caret-down" style="position: absolute; right: 1.5pc;top: 1pc"></i>
             </button>
             <div id="myDropdown" class="dropdown-content">
-              <a v-if="dropDownContents.length==0" style="text-align: center; color: gray;"> ไม่มี </a>
+              <a v-if="dropDownContents.length==0" style="text-align: center; color: gray;"> None </a>
               <a v-for="(link, index) in dropDownContents" :key="index" @click="handleDropDownClick(link.id,link.name)">
                 {{ link.name }}
               </a>
@@ -21,16 +21,16 @@
           </div>
           <button class="Navbar-btn" 
             :class="{'Navbar-btn Hightlighted': $route.name === 'tag'}"
-            @click="navigateTo('tag')">แก้ไขหมวดหมู่</button>
+            @click="navigateTo('tag')">Edit Category</button>
           <button class="Navbar-btn" 
             :class="{'Navbar-btn Hightlighted': $route.name === 'add'}"
-            @click="navigateTo('add')">+ เพิ่ม</button>
+            @click="navigateTo('add')">+ Add</button>
           <button class="Navbar-btn" 
             :class="{'Navbar-btn Hightlighted': $route.name === 'remaining'}"
-            @click="navigateTo('remaining')">รายชื่อที่เหลือ</button>
+            @click="navigateTo('remaining')">Remaining List</button>
           <div class="dropdown">
             <button @click="historyDropDown()" class="dropbtn" style="width: 7pc;">
-              ประวัติ
+              History
               <i class="fa fa-caret-down" style="position: absolute; right: 1.5pc;top: 1pc"></i>
             </button>
             <div id="myHistoryDropdown" class="dropdown-content" style="width: 7.3pc;">
@@ -52,11 +52,11 @@ export default {
   name: 'Navbar',
   data() {
     return {
-      dropDownText: localStorage.getItem('dropDownText') || "เลือกหมวด",
+      dropDownText: localStorage.getItem('dropDownText') || "Select Category",
       dropDownContents: {},
       historyContents: [
-        {'name': 'จับฉลากแล้ว','path':'history'},
-        {'name': 'ลบล่าสุด','path':'deleted'}
+        {'name': 'Drawn Lots','path':'history'},
+        {'name': 'Recently Deleted','path':'deleted'}
       ]
     };
   },
